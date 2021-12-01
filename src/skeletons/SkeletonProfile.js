@@ -1,10 +1,12 @@
 import React from 'react'
+import Shimmer from './Shimmer'
 import SkeletonElement from './SkeletonElement'
 
-const SkeletonProfile = () => {
+const SkeletonProfile = ({ theme }) => {
+  const themeClass = theme || 'light'
 
   return (
-    <div className="skeleton-wrapper">
+    <div className={`skeleton-wrapper ${themeClass}`}>
       <div className="skeleton-profile">
         <div>
           <SkeletonElement type="avatar" />
@@ -15,6 +17,7 @@ const SkeletonProfile = () => {
           <SkeletonElement type="text" />
         </div>
       </div>
+      <Shimmer />
     </div>
   )
 }
