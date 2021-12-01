@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import SkeletonElement from '../skeletons/SkeletonElement';
 
-const User = () => {
-  const [profile, setProfile] = useState(null);
+const Articles = () => {
+  const [articles, setArticles] = useState(null);
 
   // runs automatically after initial render
   useEffect(() => {
     setTimeout( async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
       const data = await res.json();
-      setProfile(data);
+      setArticles(data);
     }, 5000)
   }, [])
 
   return (
-    <div className="user">
-      <h2>User Details</h2>
+    <div className="articles">
+      <h2>All Articles</h2>
 
-      {profile && (
-        <div className="profile">
-          <h3>{ profile.username }</h3>
-          <p>{ profile.email }</p>
-          <a href={ profile.website }>{ profile.website }</a>
+      <SkeletonElement type="title" />
+      <SkeletonElement type="text" />
+      <SkeletonElement type="avatar" />
+      <SkeletonElement type="thumbnail" />
+
+      {articles && articles.map(article => (
+        <div className="article" key={ article.id }>
+          <h3>{ article.title }</h3>
+          <p>{ article.body }</p>
         </div>
-      )}
+      ))}
 
-      {!profile && <div>Loading...</div>}
+      {!articles && <div>Loading...</div>}
     </div>
   )
 }
 
-export default User
+export default Articles
